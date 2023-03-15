@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "361930787587",
+    "project_id": "animal-feed-game",
+    "storage_bucket": "animal-feed-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361930787587:android:347aa3594ee8c0a14ff736",
+        "android_client_info": {
+          "package_name": "com.example.animal_feed_game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361930787587-qpg8b0a2gh0niujq9ta7ufr6not0r9bd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikiGJmxFogIgarWAuVh1fbn9yPtwnkXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361930787587-qpg8b0a2gh0niujq9ta7ufr6not0r9bd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
