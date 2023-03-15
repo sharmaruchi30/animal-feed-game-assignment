@@ -30,10 +30,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   camera: ^0.10.3+2
+  cloud_firestore: ^4.4.4
   cupertino_icons: ^1.0.2
+  firebase_core: ^2.7.1
   firebase_storage: ^11.0.15
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^13.0.0
   google_fonts: ^4.0.3
   image_picker: ^0.8.7
   path_provider: ^2.0.13

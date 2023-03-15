@@ -1,6 +1,8 @@
 
 import 'package:animal_feed_game/screens/done.dart';
+import 'package:animal_feed_game/screens/utils/notification_service.dart';
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
@@ -16,15 +18,19 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  final  _reference = FirebaseFirestore.instance.collection("AllImages");
   late CameraController _cameraController;
   var image;
-  bool imageTaken = false;
+  String imageUrl='';
   int count = 0;
+
+  NotificationService notificationService = NotificationService();
   late Future<void> cameraValue;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    notificationService.initializeNotifications();
     _cameraController =
         CameraController(widget.cameras[0], ResolutionPreset.medium);
     cameraValue = _cameraController.initialize();
@@ -157,9 +163,42 @@ class _FeedScreenState extends State<FeedScreen> {
                                   height: 80,
                                   width: 80,
                                   child: FloatingActionButton(
-                                    onPressed: () {
-                                       
+                                    onPressed: () async{
+                                      if (image == null) return;
+                                      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+                                       // creating reference to upload image
+                                       Reference refRoot = FirebaseStorage.instance.ref();
+                                       Reference refDirImages = refRoot.child('images');
 
+                                      Reference refImgToUpload = refDirImages.child(fileName);
+                                      
+                                      
+
+                                      try{
+                                        await refImgToUpload.putFile(File(image.path));
+                                        imageUrl = await refImgToUpload.getDownloadURL();
+
+                                        
+                                        notificationService.sendNotification("", "Thank you for sharing food with me.");
+                                      }
+                                      catch(error){
+                                          print(error);
+                                      }
+                                      finally{
+                                          if ( imageUrl != ""){
+                                          //   Map<String,String> sendImageData = {
+                                          //  'image' : imageUrl,
+                                          //   };
+                                          var data = {
+                                            'image' : imageUrl
+                                          };
+                                          await _reference.add(data);
+                                          }
+                                          else{
+                                            print("Image URl =" + imageUrl);
+                                          }
+                                      }
+                                      
                                       count++;
                                       print(count);
                                       // if (count == 3){
@@ -209,23 +248,26 @@ class _FeedScreenState extends State<FeedScreen> {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Colors.blueGrey,
-                        ),
-                        child: const Icon(
-                          Icons.keyboard_backspace_outlined,
-                          color: Colors.white,
-                          size: 40,
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.blueGrey,
+                          ),
+                          child: const Icon(
+                            Icons.keyboard_backspace_outlined,
+                            color: Colors.white,
+                            size: 40,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   AnimatedContainer(
-                    height: getSize()  ,
+                    height: count ==1 ? 170 : count == 2? 200 : 140 ,
                     duration: Duration(seconds: 1),
                     onEnd: () {
                       if (count == 2){
@@ -234,7 +276,12 @@ class _FeedScreenState extends State<FeedScreen> {
                            count=0;
                       }
                     },
+                    
                     child: const Image(image: AssetImage("assets/cat.png")),
+                  ),
+                  const SizedBox(height: 5,),
+                  Text("Current State : ${count==1? 'Teen Cat' : count == 2 ? 'Adult Cat' : 'Baby Cat'}", 
+                  style: GoogleFonts.andika(),
                   )
                 ],
               )),
@@ -243,20 +290,5 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
   
-  double getSize() {
-    if (count == 0){
-      return 140.0;
-    }
-    else if(count ==1){
-      return 170;
-      
-    }
-    else if(count ==2) {
-      return 200;
-      
-    }
-    else{
-      return 140;
-    }
-  }
+ 
 }
