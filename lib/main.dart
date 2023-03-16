@@ -1,7 +1,4 @@
-import 'package:animal_feed_game/screens/done.dart';
-import 'package:animal_feed_game/screens/feed_screen.dart';
 import 'package:animal_feed_game/screens/home_screen.dart';
-import 'package:animal_feed_game/screens/image_view_screen.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Feed Animals",
+      title: "Feed Animal",
       theme: ThemeData(
         primarySwatch: Colors.blueGrey
       ),
