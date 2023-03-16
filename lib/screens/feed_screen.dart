@@ -1,17 +1,30 @@
 
-import 'package:animal_feed_game/screens/done.dart';
-import 'package:animal_feed_game/screens/utils/notification_service.dart';
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:image_picker/image_picker.dart';
+
+import 'package:animal_feed_game/screens/done.dart';
+import 'package:animal_feed_game/screens/utils/notification_service.dart';
 
 class FeedScreen extends StatefulWidget {
-  const FeedScreen({super.key, required this.cameras});
   final List<CameraDescription> cameras;
+  String animal;
+  String babyImg;
+  String kidImg;
+  String teenImg;
+  FeedScreen({
+    Key? key,
+    required this.cameras,
+    required this.animal,
+    required this.babyImg,
+    required this.kidImg,
+    required this.teenImg,
+  }) : super(key: key);
+  
 
   @override
   State<FeedScreen> createState() => _FeedScreenState();
@@ -61,7 +74,7 @@ class _FeedScreenState extends State<FeedScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 500,
+              height: 470,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
@@ -247,6 +260,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
@@ -264,10 +278,13 @@ class _FeedScreenState extends State<FeedScreen> {
                           ),
                         ),
                       ),
+                      Text("Current State : ${count==1? 'Kid ${widget.animal}': count == 2 ? 'Teen ${widget.animal}' : 'Baby ${widget.animal}'}", 
+                      style: GoogleFonts.andika(),
+                      ), 
                     ],
                   ),
                   AnimatedContainer(
-                    height: count ==1 ? 170 : count == 2? 200 : 140 ,
+                    height: count ==1 ? 260 : count == 2? 270 : 250 ,
                     duration: Duration(seconds: 1),
                     onEnd: () {
                       if (count == 2){
@@ -276,13 +293,13 @@ class _FeedScreenState extends State<FeedScreen> {
                            count=0;
                       }
                     },
+                    child: Image(image: count == 1? AssetImage(widget.kidImg) : count == 2? AssetImage(widget.teenImg): AssetImage(widget.babyImg)),
                     
-                    child: const Image(image: AssetImage("assets/cat.png")),
                   ),
-                  const SizedBox(height: 5,),
-                  Text("Current State : ${count==1? 'Teen Cat' : count == 2 ? 'Adult Cat' : 'Baby Cat'}", 
-                  style: GoogleFonts.andika(),
-                  )
+                  // const SizedBox(height: 5,),
+                  // Text("Current State : ${count==1? 'Kid' : count == 2 ? 'Teen' : 'Baby'}", 
+                  // style: GoogleFonts.andika(),
+                  // )
                 ],
               )),
         ]),

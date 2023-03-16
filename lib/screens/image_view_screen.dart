@@ -15,20 +15,23 @@ class ImageViewScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.blueGrey,
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.blueGrey,
+                ),
+                
+                child: const Icon(
+                  Icons.keyboard_backspace_outlined,
+                  color: Colors.white,
+                  size: 40,
+                ),
+                          ),
               ),
-              
-              child: const Icon(
-                Icons.keyboard_backspace_outlined,
-                color: Colors.white,
-                size: 40,
-              ),
-            ),
             const SizedBox(height: 20,),
               Expanded(
                 child: StreamBuilder(
