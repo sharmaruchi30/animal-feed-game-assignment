@@ -1,11 +1,11 @@
 # animal_feed_game
 
 App Screen Shots :- <br>
-<img src = " assets/screenshots/1.jpg" width = "180" height = "380" >
-<img src = " assets/screenshots/2.jpg" width = "180" height = "380" >
-<img src = " assets/screenshots/3.jpg" width = "180" height = "380" >
-<img src = " assets/screenshots/4.jpg" width = "180" height = "380" >
-<img src = " assets/screenshots/5.jpg" width = "180" height = "380" >
+<img src = "assets/screenshots/1.jpg" width = "180" height = "380" >
+<img src = "assets/screenshots/2.jpg" width = "180" height = "380" >
+<img src = "assets/screenshots/3.jpg" width = "180" height = "380" >
+<img src = "assets/screenshots/4.jpg" width = "180" height = "380" >
+<img src = "assets/screenshots/5.jpg" width = "180" height = "380" >
 
 ## Getting Started
 
